@@ -19,7 +19,7 @@ pipeline {
         checkout scm
         container('maven-jdk8'){
           sh 'mvn package -X'
-          sh 'ls -l /home/jenkins/agent/workspace/sho-petclinic_main/target/'
+          sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master'
           stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0-SNAPSHOT.jar'
           // sh 'curl -v --ssl-reqd -u praumann:jmUD156yzCxXnCiHxH0V3ktumLHPpfYs -T /home/jenkins/agent/workspace/thunder-petclinic_main/target/spring-petclinic-3.1.0.jar ftp://us-east-1.sftpcloud.io:21/'
         }
