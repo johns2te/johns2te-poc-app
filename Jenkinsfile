@@ -19,7 +19,6 @@ pipeline {
         checkout scm
         container('maven-jdk8'){
           sh 'mvn package'
-          sleep 2000
           sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/target'
           stash name: 'sho-petclinic-jar', includes: 'spring-petclinic-2.2.0-BUILD-SNAPSHOT.jar'
           
