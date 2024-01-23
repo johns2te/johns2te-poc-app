@@ -19,8 +19,8 @@ pipeline {
         checkout scm
         container('maven-jdk8'){
           sh 'mvn package'
-          sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/target'
-          stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0-BUILD-SNAPSHOT.jar'
+          sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/target/'
+          stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
           
           // sh 'curl -v --ssl-reqd -u praumann:jmUD156yzCxXnCiHxH0V3ktumLHPpfYs -T /home/jenkins/agent/workspace/thunder-petclinic_main/target/spring-petclinic-3.1.0.jar ftp://us-east-1.sftpcloud.io:21/'
         }
@@ -48,7 +48,6 @@ pipeline {
           -Dsonar.login=13094ff5ed08f3626272650bb019588afeae1dcb \
           -Dsonar.exclusions='**/*.java' \
           -Dsonar.projectName=petclinic-1" 
-          sleep 2000
         }
       }
     }
