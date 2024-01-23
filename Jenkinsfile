@@ -71,10 +71,10 @@ pipeline {
           archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
         }
     } 
-    /*stage('Trigger Release') {
+    stage('Trigger Release') {
       agent any
         steps {
           cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'petclinic' + '","stages":"[{\\"stageName\\": \\"Pre-Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Quality Assurance\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Release Readiness\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'praumann Demo', releaseName: 'petclinic', startingStage: 'Release Readiness'}        
         }
-    }*/
+    }
 } //pipeline conclusion
