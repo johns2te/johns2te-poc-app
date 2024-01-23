@@ -17,7 +17,7 @@ pipeline {
       }
       steps {
         checkout scm
-        container('maven'){
+        container('maven-jdk8'){
           sh 'mvn package'
           sh 'ls -l /home/jenkins/agent/workspace/thunder-petclinic_main/target/'
           stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0-SNAPSHOT.jar'
@@ -35,7 +35,7 @@ pipeline {
       }
       steps {
         checkout scm
-        container('maven'){
+        container('maven-jdk8'){
           //withSonarQubeEnv(credentialsId: 'petclinic-1-sonar', installationName: 'Sonar')
          // { // You can override the credential to be used
            // sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
