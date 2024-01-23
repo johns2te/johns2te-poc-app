@@ -18,7 +18,7 @@ pipeline {
       steps {
         checkout scm
         container('maven-jdk8'){
-          sh 'mvn package'
+          sh './mvnw package'
           sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/target/'
           stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
           
@@ -42,7 +42,7 @@ pipeline {
            // sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
           //}
           
-          sh "mvn sonar:sonar \
+          sh "./mvnw clean verify sonar:sonar \
           -Dsonar.projectKey=petclinic-1 \
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
           -Dsonar.login=13094ff5ed08f3626272650bb019588afeae1dcb \
@@ -71,10 +71,10 @@ pipeline {
           archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
         }
     } 
-    stage('Trigger Release') {
+    /*stage('Trigger Release') {
       agent any
         steps {
           cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'petclinic' + '","stages":"[{\\"stageName\\": \\"Pre-Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Quality Assurance\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Release Readiness\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'praumann Demo', releaseName: 'petclinic', startingStage: 'Release Readiness'}        
         }
-    }
+    }*/
 } //pipeline conclusion
