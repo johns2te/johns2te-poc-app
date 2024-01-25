@@ -42,7 +42,7 @@ pipeline {
            // sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
           //}
           
-          sh "./mvnw clean verify sonar:sonar \
+          sh "mvn sonar:sonar \
           -Dsonar.projectKey=petclinic-1 \
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
           -Dsonar.login=13094ff5ed08f3626272650bb019588afeae1dcb \
