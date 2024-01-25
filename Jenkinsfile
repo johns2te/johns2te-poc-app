@@ -46,12 +46,12 @@ pipeline {
           -Dsonar.projectKey=petclinic-1 \
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
           -Dsonar.login=13094ff5ed08f3626272650bb019588afeae1dcb \
-          -Dsonar.projectName=petclinic-1
-          -Dsonar.tests=src/test
-          -Dsonar.junit.reportsPath=target/surefire-reports
-          -Dsonar.surefire.reportsPath=target/surefire-reports
-          -Dsonar.jacoco.reportPath=target/jacoco.exec
-          -Dsonar.java.binaries=target/classes
+          -Dsonar.projectName=petclinic-1 \
+          -Dsonar.tests=src/test \
+          -Dsonar.junit.reportsPath=target/surefire-reports \
+          -Dsonar.surefire.reportsPath=target/surefire-reports \
+          -Dsonar.jacoco.reportPath=target/jacoco.exec \
+          -Dsonar.java.binaries=target/classes \
           -Dsonar.java.coveragePlugin=jacoco" 
         }
       }
