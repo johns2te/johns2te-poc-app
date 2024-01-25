@@ -47,6 +47,7 @@ pipeline {
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
           -Dsonar.login=13094ff5ed08f3626272650bb019588afeae1dcb \
           -Dsonar.projectName=petclinic-1 \
+          -Dsonar.sources =src/main \
           -Dsonar.tests=src/test \
           -Dsonar.junit.reportsPath=target/surefire-reports \
           -Dsonar.surefire.reportsPath=target/surefire-reports \
