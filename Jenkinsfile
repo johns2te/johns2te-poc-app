@@ -41,8 +41,8 @@ pipeline {
         container('jdk11'){
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
               sh "./mvnw clean verify -T8 sonar:sonar \
-              -Dsonar.sourceEncoding=UTF-8
-              -Dsonar.language=java
+              -Dsonar.sourceEncoding=UTF-8 \
+              -Dsonar.language=java \
               -Dsonar.projectKey=petclinic-1 \
               -Dsonar.host.url=https://sonarqube.cb-demos.io \
               -Dsonar.login=${SONAR_SECRET} \
