@@ -21,14 +21,6 @@ pipeline {
       }
       steps {
         checkout scm
-        script {
-            // Use the withCredentials step to access the secret text credential
-            withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-            echo "SonarQube secret: ${SONAR_SECRET}"
-
-            // Your other commands here
-            }
-        }
         container('jdk11'){
           sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
@@ -47,20 +39,21 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          sh '''./mvnw sonar:sonar \
-          -Dsonar.projectKey=petclinic-1 \
-          -Dsonar.host.url=https://sonarqube.cb-demos.io \
-          -Dsonar.login=$SONAR_CRED \
-          -Dsonar.projectName=petclinic-1 \
-          -Dsonar.sources =src/main \
-          -Dsonar.tests=src/test \
-          -Dsonar.junit.reportsPath=target/surefire-reports \
-          -Dsonar.surefire.reportsPath=target/surefire-reports \
-          -Dsonar.jacoco.reportPath=target/jacoco.exec \
-          -Dsonar.java.binaries=target/classes \
-          -Dsonar.java.coveragePlugin=jacoco'''
-        } 
-      }
+            withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
+              sh "./mvnw sonar:sonar \
+              -Dsonar.projectKey=petclinic-1 \
+              -Dsonar.host.url=https://sonarqube.cb-demos.io \
+              -Dsonar.login=${SONAR_SECRET}\
+              -Dsonar.projectName=petclinic-1 \
+              -Dsonar.sources =src/main \
+              -Dsonar.tests=src/test \
+              -Dsonar.junit.reportsPath=target/surefire-reports \
+              -Dsonar.surefire.reportsPath=target/surefire-reports \
+              -Dsonar.jacoco.reportPath=target/jacoco.exec \
+              -Dsonar.java.binaries=target/classes \
+              -Dsonar.java.coveragePlugin=jacoco"
+            } 
+        }
     }
     
     stage('CheckMarx Results') {
