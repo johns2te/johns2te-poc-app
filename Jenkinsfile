@@ -23,7 +23,8 @@ pipeline {
         checkout scm
         script {
             // Access SONAR_CRED here
-            echo "SonarQube credentials: ${SONAR_CRED}"
+            def sonarCredValue = SONAR_CRED
+            echo "SonarQube credentials: ${sonarCredValue}"
             // Your other commands here
         }
         container('jdk11'){
