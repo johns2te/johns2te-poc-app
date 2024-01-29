@@ -22,7 +22,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
+          sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package -T8'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
@@ -40,7 +40,7 @@ pipeline {
         checkout scm
         container('jdk11'){
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-              sh "./mvnw clean verify sonar:sonar \
+              sh "./mvnw clean verify -T8 sonar:sonar \
               -Dsonar.projectKey=petclinic-1 \
               -Dsonar.host.url=https://sonarqube.cb-demos.io \
               -Dsonar.login=${SONAR_SECRET} \
