@@ -12,7 +12,7 @@ pipeline {
     preserveStashes(buildCount: 10)
   }
   stages {
-    stage('Maven Install') {
+    /*stage('Maven Install') {
       agent{
         kubernetes {
           label 'maven-app'
@@ -27,7 +27,7 @@ pipeline {
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }  
-    }
+    }*/
     
     stage('SonarQube Analysis') {
        agent{
@@ -54,13 +54,16 @@ pipeline {
               -Dsonar.jacoco.reportPath=target/jacoco.exec \
               -Dsonar.java.binaries=target/classes \
               -Dsonar.java.coveragePlugin=jacoco"
-            } 
+            }
+        sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
+        stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }
     }
     
     stage('CheckMarx Results') {
       agent none
+        echo "hello"
         steps {
           echo '''[{
             "TotalIssues": 6,
