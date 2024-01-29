@@ -35,7 +35,7 @@ pipeline {
           label 'maven-app'
           yaml mvnBuildYaml
         }
-      }
+       }
       steps {
         checkout scm
         container('jdk11'){
@@ -54,6 +54,7 @@ pipeline {
               -Dsonar.java.coveragePlugin=jacoco"
             } 
         }
+      }
     }
     
     stage('CheckMarx Results') {
