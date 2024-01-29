@@ -22,11 +22,9 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          sh '/home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/mvnw clean package'
-          sh 'ls -l /home/jenkins/agent/workspace/clinic-apps_sho-petclinic_master/target/'
-          stash name: 'sho-petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
-          
-          // sh 'curl -v --ssl-reqd -u praumann:jmUD156yzCxXnCiHxH0V3ktumLHPpfYs -T /home/jenkins/agent/workspace/thunder-petclinic_main/target/spring-petclinic-3.1.0.jar ftp://us-east-1.sftpcloud.io:21/'
+          sh '/home/jenkins/agent/workspace/workspace/BES_bes_poc_master/mvnw clean package'
+          sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
+          stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }  
     }
@@ -41,11 +39,6 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          //withSonarQubeEnv(credentialsId: 'petclinic-1-sonar', installationName: 'Sonar')
-         // { // You can override the credential to be used
-           // sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-          //}
-          
           sh "./mvnw sonar:sonar \
           -Dsonar.projectKey=petclinic-1 \
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
@@ -58,29 +51,56 @@ pipeline {
           -Dsonar.jacoco.reportPath=target/jacoco.exec \
           -Dsonar.java.binaries=target/classes \
           -Dsonar.java.coveragePlugin=jacoco" 
-        }
+        } 
       }
     }
     
-//node {
-//  stage('SCM') {
-//    checkout scm
-//  }
-//    stage('Test') {
-//      agent any
-//        steps {
-//          junit '**/build/test-reports/*.xml'
-//        }
-//    }    
-    
+    stage('CheckMarx Results') {
+      agent none
+        steps {
+          echo '''[{
+            "TotalIssues": 6,
+            "HighIssues": 0,
+            "MediumIssues": 1,
+            "LowIssues": 5,
+            "InfoIssues": 0,
+            "SastIssues": 6,
+            "KicsIssues": 0,
+            "ScaIssues": -1,
+            "APISecurity": {
+                "api_count": 0,
+                "total_risks_count": 0,
+                "risks": null
+            },
+            "RiskStyle": "medium",
+            "RiskMsg": "Medium Risk",
+            "Status": "Completed",
+            "ScanID": "8a072853-9594-47e5-a544-d6b2d4af837c",
+            "ScanDate": "",
+            "ScanTime": "",
+            "CreatedAt": "2023-07-06, 13:04:53",
+            "ProjectID": "e34d40c7-cd4b-4cba-9794-0004f66a173e",
+            "BaseURI": "https://ast.checkmarx.net/projects/e34d40c7-cd4b-4cba-9794-0004f66a173e/overview",
+            "Tags": {},
+            "ProjectName": "bws_enterpriseservices",
+            "BranchName": "testing-2",
+            "ScanInfoMessage": "",
+            "EnginesEnabled": [
+                "sast"
+            ]
+          }]''' > test.json 
+        } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
+    }
+   
     stage('Publish') {
       agent any
         steps {
-          unstash 'sho-petclinic-jar'
+          unstash 'petclinic-jar'
           cloudBeesFlowPublishArtifact artifactName: 'com.cloudbees:petclinic', artifactVersion: '$BUILD_ID', configuration: 'CD', filePath: 'target/*.jar', relativeWorkspace: '', repositoryName: 'default'
           archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
         }
-    } 
+    }
+
     stage('Trigger Release') {
       agent any
         steps {
