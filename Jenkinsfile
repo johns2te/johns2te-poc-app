@@ -21,8 +21,8 @@ pipeline {
       }
       steps {
         checkout scm
+        echo $SONAR_CRED
         container('jdk11'){
-          echo $SONAR_CRED
           sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
