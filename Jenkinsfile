@@ -40,7 +40,7 @@ pipeline {
         checkout scm
         container('jdk11'){
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-              sh "./mvnw sonar:sonar \
+              sh "./mvnw clean verify sonar:sonar \
               -Dsonar.projectKey=petclinic-1 \
               -Dsonar.host.url=https://sonarqube.cb-demos.io \
               -Dsonar.login=${SONAR_SECRET} \
