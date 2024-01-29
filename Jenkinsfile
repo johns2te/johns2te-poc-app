@@ -39,6 +39,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
+            sleep 500
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
               sh "./mvnw sonar:sonar \
               -Dsonar.projectKey=petclinic-1 \
