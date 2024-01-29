@@ -21,7 +21,11 @@ pipeline {
       }
       steps {
         checkout scm
-        echo "$SONAR_CRED"
+        script {
+            // Access SONAR_CRED here
+            echo "SonarQube credentials: ${SONAR_CRED}"
+            // Your other commands here
+        }
         container('jdk11'){
           sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
