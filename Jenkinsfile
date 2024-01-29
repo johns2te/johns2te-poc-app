@@ -63,8 +63,8 @@ pipeline {
     
     stage('CheckMarx Results') {
       agent none
-        echo "hello"
         steps {
+          echo "hello checkmarx"
           echo '''[{
             "TotalIssues": 6,
             "HighIssues": 0,
