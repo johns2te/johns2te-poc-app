@@ -39,7 +39,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-            sleep 500
+            sh "pwd"
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
               sh "./mvnw sonar:sonar \
               -Dsonar.projectKey=petclinic-1 \
@@ -47,6 +47,7 @@ pipeline {
               -Dsonar.login=${SONAR_SECRET}\
               -Dsonar.projectName=petclinic-1 \
               -Dsonar.tests=src/test \
+              -Dsonar.sources=src/main \
               -Dsonar.junit.reportsPath=target/surefire-reports \
               -Dsonar.surefire.reportsPath=target/surefire-reports \
               -Dsonar.jacoco.reportPath=target/jacoco.exec \
