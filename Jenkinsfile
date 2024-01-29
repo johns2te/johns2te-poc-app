@@ -22,10 +22,12 @@ pipeline {
       steps {
         checkout scm
         script {
-            // Access SONAR_CRED here
-            def sonarCredValue = SONAR_CRED
-            echo "SonarQube credentials: ${sonarCredValue}"
+            // Use the withCredentials step to access the secret text credential
+            withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
+            echo "SonarQube secret: ${SONAR_SECRET}"
+
             // Your other commands here
+            }
         }
         container('jdk11'){
           sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
