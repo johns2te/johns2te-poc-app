@@ -40,7 +40,7 @@ pipeline {
         checkout scm
         container('jdk11'){
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-              sh "./mvnw clean package -T16 sonar:sonar \
+              sh "./mvnw clean package sonar:sonar \
               -Dsonar.sourceEncoding=UTF-8 \
               -Dsonar.language=java \
               -Dsonar.projectKey=petclinic-1 \
