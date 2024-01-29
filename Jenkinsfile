@@ -22,6 +22,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
+          echo $SONAR_CRED
           sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
@@ -39,7 +40,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          sh "./mvnw sonar:sonar \
+          sh '''./mvnw sonar:sonar \
           -Dsonar.projectKey=petclinic-1 \
           -Dsonar.host.url=https://sonarqube.cb-demos.io \
           -Dsonar.login=$SONAR_CRED \
@@ -50,7 +51,7 @@ pipeline {
           -Dsonar.surefire.reportsPath=target/surefire-reports \
           -Dsonar.jacoco.reportPath=target/jacoco.exec \
           -Dsonar.java.binaries=target/classes \
-          -Dsonar.java.coveragePlugin=jacoco" 
+          -Dsonar.java.coveragePlugin=jacoco'''
         } 
       }
     }
