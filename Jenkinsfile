@@ -113,7 +113,7 @@ pipeline {
     stage('Trigger Release') {
       agent any
         steps {
-          cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'PEO BES' + '","stages":"[{\\"stageName\\": \\"Evidence\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Delivery\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'tjohnson Demo', releaseName: 'PEO VES', startingStage: 'Release Readiness'}        
+          cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'PEO BES' + '","stages":"[{\\"stageName\\": \\"Evidence\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Delivery\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'tjohnson Demo', releaseName: 'PEO BES', startingStage: 'Evidence'}        
         }
     }
     post {
