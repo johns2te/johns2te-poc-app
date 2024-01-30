@@ -66,7 +66,7 @@ pipeline {
             writeFile(
                 file: "checkmarx.json",
                 text: '''\
-                    [{
+                [{
                     "TotalIssues": 6,
                     "HighIssues": 0,
                     "MediumIssues": 1,
