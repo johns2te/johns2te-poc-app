@@ -117,9 +117,10 @@ pipeline {
           cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'petclinic' + '","stages":"[{\\"stageName\\": \\"Pre-Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Quality Assurance\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Release Readiness\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'praumann Demo', releaseName: 'petclinic', startingStage: 'Release Readiness'}        
         }
     }
-} //pipeline conclusion
-post {
-    always {
-        archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
+    post {
+        always {
+            archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
+        }
     }
-}
+} //pipeline conclusion
+
