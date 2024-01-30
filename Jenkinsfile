@@ -66,18 +66,18 @@ pipeline {
             writeFile(
                 file: "checkmarx.json",
                 text: """\
-                    [{'TotalIssues': '6',
-                    'HighIssues': '0',
-                    'MediumIssues': '1',
-                    'LowIssues': '5',
-                    'InfoIssues': '0',
-                    'SastIssues': '6',
-                    'KicsIssues': '0',
-                    'ScaIssues': '-1',
+                    [{'TotalIssues': 6,
+                    'HighIssues': 0,
+                    'MediumIssues': 1,
+                    'LowIssues': 5,
+                    'InfoIssues': 0,
+                    'SastIssues': 6,
+                    'KicsIssues': 0,
+                    'ScaIssues': -1,
                     'APISecurity': {
-                        'api_count': '0',
-                        'total_risks_count': '0',
-                        'risks': '0'
+                        'api_count': 0,
+                        'total_risks_count': 0,
+                        'risks': 0
                     },
                     'RiskStyle': 'medium',
                     'RiskMsg': 'Medium Risk',
