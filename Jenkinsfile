@@ -12,7 +12,7 @@ pipeline {
     preserveStashes(buildCount: 10)
   }
   stages {
-    /*stage('Maven Install') {
+    stage('Maven Install') {
       agent{
         kubernetes {
           label 'maven-app'
@@ -27,7 +27,7 @@ pipeline {
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }  
-    }*/
+    }
     
     stage('SonarQube Analysis') {
        agent{
@@ -40,7 +40,7 @@ pipeline {
         checkout scm
         container('jdk11'){
             withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-              sh "./mvnw clean package sonar:sonar \
+              sh "./mvnw sonar:sonar \
               -Dsonar.sourceEncoding=UTF-8 \
               -Dsonar.language=java \
               -Dsonar.projectKey=petclinic-1 \
@@ -96,8 +96,7 @@ pipeline {
                 "EnginesEnabled": [
                     "sast"
                 ]
-              }]''' > test.json 
-            }
+            }]''' > test.json 
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
    
