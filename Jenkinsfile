@@ -22,7 +22,7 @@ pipeline {
       steps {
         checkout scm
         container('jdk11'){
-          sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package -T8'
+          sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
           sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
           stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
@@ -98,6 +98,7 @@ pipeline {
                 ]
             }]''' > test.json
             }
+        echo "json works"
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
    
