@@ -101,11 +101,6 @@ pipeline {
             echo "json works"
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
-        }
-    }
    
     stage('Publish') {
       agent any
@@ -123,3 +118,8 @@ pipeline {
         }
     }
 } //pipeline conclusion
+post {
+    always {
+        archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
+    }
+}
