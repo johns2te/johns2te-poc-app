@@ -97,8 +97,7 @@ pipeline {
                     'EnginesEnabled': [
                         'sast'
                         ]""".stripIndent()
-                )
-            }
+            )
             echo "json works"
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
