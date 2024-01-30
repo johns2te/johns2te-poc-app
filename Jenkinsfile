@@ -55,7 +55,7 @@ pipeline {
               -Dsonar.java.binaries=target/classes \
               -Dsonar.java.coveragePlugin=jacoco"
             }
-        sh 'ls -l /home/jenkins/agent/workspace/bes_poc_master/target/'
+        sh 'ls -l /home/jenkins/agent/workspace/bes_poc/target/'
         stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }
@@ -113,7 +113,7 @@ pipeline {
     stage('Trigger Release') {
       agent any
         steps {
-          cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'petclinic' + '","stages":"[{\\"stageName\\": \\"Pre-Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Production\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Quality Assurance\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Release Readiness\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'praumann Demo', releaseName: 'petclinic', startingStage: 'Release Readiness'}        
+          cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'PEO BES' + '","stages":"[{\\"stageName\\": \\"Evidence\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Delivery\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'tjohnson Demo', releaseName: 'PEO VES', startingStage: 'Release Readiness'}        
         }
     }
     post {
