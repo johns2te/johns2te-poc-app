@@ -24,8 +24,8 @@ pipeline {
               steps {
                 checkout scm
                 container('jdk11'){
-                  sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
-                  sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
+                  sh '/home/jenkins/agent/workspace/bes_poc/mvnw clean package'
+                  sh 'ls -l /home/jenkins/agent/workspace/bes_poc/target/'
                   stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
                 }
               }  
