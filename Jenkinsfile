@@ -55,7 +55,7 @@ pipeline {
               -Dsonar.java.binaries=target/classes \
               -Dsonar.java.coveragePlugin=jacoco"
             }
-        sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
+        sh 'ls -l /home/jenkins/agent/workspace/bes_poc_master/target/'
         stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
       }
