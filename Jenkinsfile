@@ -65,7 +65,7 @@ pipeline {
       agent none
         steps {
           echo "hello checkmarx"
-          echo '''[{
+          echo '[{
             "TotalIssues": 6,
             "HighIssues": 0,
             "MediumIssues": 1,
@@ -95,7 +95,7 @@ pipeline {
             "EnginesEnabled": [
                 "sast"
             ]
-          }]''' > test.json 
+          }]' > test.json 
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
    
