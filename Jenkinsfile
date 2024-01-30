@@ -105,6 +105,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
         }
+    }
    
     stage('Publish') {
       agent any
