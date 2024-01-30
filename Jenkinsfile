@@ -63,11 +63,10 @@ pipeline {
     
     stage('CheckMarx Results') {
         steps {
-            echo "hello checkmarx"
             writeFile(
                 file: "checkmarx.json",
                 text: """\
-                    'TotalIssues': '6',
+                    [{'TotalIssues': '6',
                     'HighIssues': '0',
                     'MediumIssues': '1',
                     'LowIssues': '5',
@@ -95,9 +94,8 @@ pipeline {
                     'ScanInfoMessage': '',
                     'EnginesEnabled': [
                         'sast'
-                        ]""".stripIndent()
+                        ]]}""".stripIndent()
             )
-            echo "json works"
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
    
