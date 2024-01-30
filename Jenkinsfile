@@ -19,6 +19,7 @@ pipeline {
                 yaml mvnBuildYaml
             }
         }
+        stages {
             stage('Maven Install') {
               steps {
                 checkout scm
@@ -53,6 +54,7 @@ pipeline {
                     }
                 }
             }
+        }
       }
     
     stage('CheckMarx Results') {
