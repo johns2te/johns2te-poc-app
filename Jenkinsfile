@@ -96,7 +96,8 @@ pipeline {
                 "EnginesEnabled": [
                     "sast"
                 ]
-            }]''' > test.json 
+            }]''' > test.json
+            }
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
    
