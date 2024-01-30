@@ -89,12 +89,12 @@ pipeline {
                     'ProjectID': 'e34d40c7-cd4b-4cba-9794-0004f66a173e',
                     'BaseURI': 'https://ast.checkmarx.net/projects/e34d40c7-cd4b-4cba-9794-0004f66a173e/overview',
                     'Tags': {},
-                    'ProjectName": 'bws_enterpriseservices',
-                    'BranchName": 'testing-2',
+                    'ProjectName': 'bws_enterpriseservices',
+                    'BranchName': 'testing-2',
                     'ScanInfoMessage': '',
                     'EnginesEnabled': [
                         'sast'
-                        ]]}""".stripIndent()
+                        ]}]""".stripIndent()
             )
         } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
     }
