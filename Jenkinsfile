@@ -62,7 +62,7 @@ pipeline {
     }
     
     stage('CheckMarx Results') {
-      agent none
+      agent any
         steps {
             echo "hello checkmarx"
             writeFile(
