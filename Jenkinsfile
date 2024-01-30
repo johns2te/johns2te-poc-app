@@ -5,7 +5,7 @@ environment {
 }
 
 pipeline {
-  agent none
+  agent any
   options { 
     buildDiscarder(logRotator(numToKeepStr: '10'))
     skipDefaultCheckout true
@@ -62,7 +62,6 @@ pipeline {
     }
     
     stage('CheckMarx Results') {
-      agent any
         steps {
             echo "hello checkmarx"
             writeFile(
