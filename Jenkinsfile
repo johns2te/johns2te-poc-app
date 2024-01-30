@@ -12,54 +12,48 @@ pipeline {
     preserveStashes(buildCount: 10)
   }
   stages {
-    /*stage('Maven Install') {
-      agent{
-        kubernetes {
-          label 'maven-app'
-          yaml mvnBuildYaml
-        }
-      }
-      steps {
-        checkout scm
-        container('jdk11'){
-          sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
-          sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
-          stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
-        }
-      }  
-    }*/
-    
-    stage('SonarQube Analysis') {
-       agent{
-        kubernetes {
-          label 'maven-app'
-          yaml mvnBuildYaml
-        }
-       }
-      steps {
-        checkout scm
-        container('jdk11'){
-            withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-              sh "./mvnw clean verify sonar:sonar \
-              -Dsonar.sourceEncoding=UTF-8 \
-              -Dsonar.language=java \
-              -Dsonar.projectKey=petclinic-1 \
-              -Dsonar.host.url=https://sonarqube.cb-demos.io \
-              -Dsonar.login=${SONAR_SECRET} \
-              -Dsonar.projectName=petclinic-1 \
-              -Dsonar.tests=src/test \
-              -Dsonar.sources=src/main \
-              -Dsonar.junit.reportsPath=target/surefire-reports \
-              -Dsonar.surefire.reportsPath=target/surefire-reports \
-              -Dsonar.jacoco.reportPath=target/jacoco.exec \
-              -Dsonar.java.binaries=target/classes \
-              -Dsonar.java.coveragePlugin=jacoco"
+      stage('Build & Scan') {
+        agent{
+            kubernetes {
+                label 'maven-app'
+                yaml mvnBuildYaml
             }
-        sh 'ls -l /home/jenkins/agent/workspace/bes_poc/target/'
-        stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
         }
+            stage('Maven Install') {
+              steps {
+                checkout scm
+                container('jdk11'){
+                  sh '/home/jenkins/agent/workspace/BES_bes_poc_master/mvnw clean package'
+                  sh 'ls -l /home/jenkins/agent/workspace/BES_bes_poc_master/target/'
+                  stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
+                }
+              }  
+            }
+    
+            stage('SonarQube Analysis') {
+                steps {
+                    checkout scm
+                    container('jdk11'){
+                        withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
+                          sh "./mvnw sonar:sonar \
+                          -Dsonar.sourceEncoding=UTF-8 \
+                          -Dsonar.language=java \
+                          -Dsonar.projectKey=petclinic-1 \
+                          -Dsonar.host.url=https://sonarqube.cb-demos.io \
+                          -Dsonar.login=${SONAR_SECRET} \
+                          -Dsonar.projectName=petclinic-1 \
+                          -Dsonar.tests=src/test \
+                          -Dsonar.sources=src/main \
+                          -Dsonar.junit.reportsPath=target/surefire-reports \
+                          -Dsonar.surefire.reportsPath=target/surefire-reports \
+                          -Dsonar.jacoco.reportPath=target/jacoco.exec \
+                          -Dsonar.java.binaries=target/classes \
+                          -Dsonar.java.coveragePlugin=jacoco"
+                        }
+                    }
+                }
+            }
       }
-    }
     
     stage('CheckMarx Results') {
         steps {
